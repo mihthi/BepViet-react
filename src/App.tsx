@@ -104,8 +104,14 @@ function AppContent() {
   });
 
   // Query: Lấy danh sách món ăn từ Server State (mock API)
-  const { data: danhSachMonAn = [], isLoading: dangTaiDuLieu } = useQuery({
-    queryKey: ['danh-sach-mon-an', { cheDo: cheDoHienTai }], 
+  const {
+    data: danhSachMonAn = [],
+    isLoading: dangTaiDuLieu,
+    isError: taiDuLieuBiLoi,
+    error: loiTaiDuLieu,
+    refetch: taiLaiDanhSach,
+  } = useQuery({
+    queryKey: ['danh-sach-mon-an'],
     queryFn: foodApi.layDanhSachMonAn,
   });
 
@@ -254,6 +260,21 @@ function AppContent() {
           <div className="py-24 flex flex-col items-center justify-center text-stone-500">
             <Loader2 className="w-8 h-8 animate-spin text-amber-600 mb-2" />
             <p className="text-xs font-medium">Đang tải danh sách món ăn từ TanStack Query...</p>
+          </div>
+        ) : taiDuLieuBiLoi ? (
+          <div className="py-24 flex flex-col items-center justify-center text-stone-500">
+            <p className="text-sm font-semibold text-red-600">Không tải được danh sách món ăn</p>
+            <p className="mt-1 text-xs text-stone-500">
+              {loiTaiDuLieu instanceof Error
+                ? loiTaiDuLieu.message
+                : 'Vui lòng kiểm tra json-server đang chạy ở cổng 3001.'}
+            </p>
+            <button
+              onClick={() => taiLaiDanhSach()}
+              className="mt-4 rounded-xl bg-amber-600 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-700"
+            >
+              Thử tải lại
+            </button>
           </div>
         ) : cheDoHienTai === 'thuc-don' ? (
           <MenuSection

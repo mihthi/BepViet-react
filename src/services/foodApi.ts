@@ -1,7 +1,7 @@
 
 import { MonAn } from '../types/food';
 
-const API_URL = 'http://localhost:4000/foods';
+const API_URL = 'http://localhost:3001/foods';
 
 async function xuLyPhanHoi<T>(response: Response): Promise<T> {
   if (!response.ok) {

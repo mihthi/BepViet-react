@@ -228,6 +228,8 @@ export const MenuSection: React.FC<ThuocTinhPhanMenu> = ({
               onClick={() => {
                 setTuKhoaTimKiem('');
                 setDanhMucDangChon('Tất cả');
+                setKieuSapXep('mac-dinh');
+                setTrangHienTai(1);
               }}
               className="px-4 py-2 text-xs font-semibold text-stone-700 bg-stone-100 hover:bg-stone-200 rounded-xl transition-colors cursor-pointer"
             >
