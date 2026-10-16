@@ -1,9 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { MonAn, DanhMucMonAn } from '../types/food';
 import { DANH_MUC_MON_AN, dinhDangTienVND } from '../data/initialFoods';
 import { SafeImage } from './SafeImage';
 import { Pagination } from './Pagination';
 import { Search, X, Eye, ArrowUpDown, Sparkles } from 'lucide-react';
+import { useFilter } from '../hooks/useFilter';
+import { usePhanTrang } from '../hooks/usePhanTrang';
+import { useSearchAndSort } from '../hooks/useSearchAndSort';
 
 interface ThuocTinhPhanMenu {
   danhSachMonAn: MonAn[];
@@ -21,35 +24,18 @@ export const MenuSection: React.FC<ThuocTinhPhanMenu> = ({
 
   const SO_MON_MOI_TRANG = 6; // Phân trang chuẩn 6 món ăn ở mỗi trang
 
-  // Lọc và sắp xếp danh sách món ăn
-  const danhSachMonDaLoc = useMemo(() => {
-    const tuKhoaChuanHoa = tuKhoaTimKiem.toLowerCase().trim();
-    const ketQuaLoc = danhSachMonAn.filter((mon) => {
-      const khopDanhMuc =
-        danhMucDangChon === 'Tất cả' || mon.phanLoai === danhMucDangChon;
-      const khopTuKhoa =
-        mon.ten.toLowerCase().includes(tuKhoaChuanHoa) ||
-        mon.moTa.toLowerCase().includes(tuKhoaChuanHoa);
-      return khopDanhMuc && khopTuKhoa;
-    });
+  const danhSachTheoDanhMuc = useFilter(danhSachMonAn, danhMucDangChon);
+  const danhSachDaTimKiemVaSapXep = useSearchAndSort(
+    danhSachTheoDanhMuc,
+    tuKhoaTimKiem,
+    kieuSapXep
+  );
 
-    if (kieuSapXep === 'gia-tang') {
-      ketQuaLoc.sort((monA, monB) => monA.gia - monB.gia);
-    } else if (kieuSapXep === 'gia-giam') {
-      ketQuaLoc.sort((monA, monB) => monB.gia - monA.gia);
-    } else if (kieuSapXep === 'ten-az') {
-      ketQuaLoc.sort((monA, monB) => monA.ten.localeCompare(monB.ten, 'vi'));
-    }
-
-    return ketQuaLoc;
-  }, [danhSachMonAn, danhMucDangChon, tuKhoaTimKiem, kieuSapXep]);
-
-  // Tính toán số trang và cắt mảng món ăn hiển thị ở trang hiện tại
-  const tongSoTrang = Math.ceil(danhSachMonDaLoc.length / SO_MON_MOI_TRANG) || 1;
-  const danhSachMonHienThi = useMemo(() => {
-    const viTriBatDau = (trangHienTai - 1) * SO_MON_MOI_TRANG;
-    return danhSachMonDaLoc.slice(viTriBatDau, viTriBatDau + SO_MON_MOI_TRANG);
-  }, [danhSachMonDaLoc, trangHienTai]);
+  const { danhSachHienThi: danhSachMonHienThi, tongSoTrang } = usePhanTrang(
+    danhSachDaTimKiemVaSapXep,
+    SO_MON_MOI_TRANG,
+    trangHienTai
+  );
 
   const thayDoiDanhMuc = (danhMucMoi: DanhMucMonAn) => {
     setDanhMucDangChon(danhMucMoi);
@@ -255,7 +241,7 @@ export const MenuSection: React.FC<ThuocTinhPhanMenu> = ({
       <Pagination
         trangHienTai={trangHienTai}
         tongSoTrang={tongSoTrang}
-        tongSoLuong={danhSachMonDaLoc.length}
+        tongSoLuong={danhSachDaTimKiemVaSapXep.length}
         soLuongMoiTrang={SO_MON_MOI_TRANG}
         chuyenTrang={(trangMoi) => {
           setTrangHienTai(trangMoi);
