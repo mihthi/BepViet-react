@@ -1,16 +1,15 @@
+
 import { MonAn } from '../types/food';
 
-const API_URL = 'http://localhost:3001/foods';
+const API_URL = 'http://localhost:4000/foods';
 
 async function xuLyPhanHoi<T>(response: Response): Promise<T> {
   if (!response.ok) {
     throw new Error(`API món ăn trả về lỗi ${response.status}`);
   }
-
   return response.json() as Promise<T>;
 }
 
-// API món ăn kết nối tới json-server.
 export const foodApi = {
   layDanhSachMonAn: async (): Promise<MonAn[]> => {
     const response = await fetch(API_URL);
@@ -28,7 +27,7 @@ export const foodApi = {
 
   capNhatMonAn: async (monCapNhat: MonAn): Promise<MonAn> => {
     const response = await fetch(`${API_URL}/${monCapNhat.id}`, {
-      method: 'PATCH',
+      method: 'PUT', 
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(monCapNhat),
     });
@@ -39,12 +38,16 @@ export const foodApi = {
     const response = await fetch(`${API_URL}/${idMonAn}`, {
       method: 'DELETE',
     });
-    await xuLyPhanHoi<MonAn>(response);
+    if (!response.ok) throw new Error('Lỗi xóa món');
     return idMonAn;
   },
 
   xoaNhieuMonAn: async (danhSachId: string[]): Promise<string[]> => {
-    await Promise.all(danhSachId.map((id) => foodApi.xoaMotMonAn(id)));
+    await Promise.all(
+      danhSachId.map((id) =>
+        fetch(`${API_URL}/${id}`, { method: 'DELETE' })
+      )
+    );
     return danhSachId;
   },
 };

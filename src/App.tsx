@@ -33,6 +33,8 @@ import { ConfirmModal } from './components/ConfirmModal';
 import { SuccessPopupModal } from './components/SuccessPopupModal';
 import { Footer } from './components/Footer';
 import { Loader2 } from 'lucide-react';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 
 // --- THÊM ROUTER: Khởi tạo các Route ---
 const rootRoute = createRootRoute({
@@ -65,6 +67,7 @@ const quanLyTruyVan = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 10, // Thêm gcTime vào đây
       refetchOnWindowFocus: false,
     },
   },
@@ -102,7 +105,7 @@ function AppContent() {
 
   // Query: Lấy danh sách món ăn từ Server State (mock API)
   const { data: danhSachMonAn = [], isLoading: dangTaiDuLieu } = useQuery({
-    queryKey: ['danh-sach-mon-an'],
+    queryKey: ['danh-sach-mon-an', { cheDo: cheDoHienTai }], 
     queryFn: foodApi.layDanhSachMonAn,
   });
 
@@ -230,7 +233,8 @@ function AppContent() {
     setMonAnCanChinhSua(monAn);
     setDangMoModalBieuMau(true);
   };
-
+  
+ 
   return (
     <div className="min-h-screen bg-stone-50 flex flex-col font-sans">
       {/* Thanh Header */}
@@ -334,6 +338,9 @@ export default function App() {
       {/* --- THÊM ROUTER: Cung cấp Router cho toàn bộ ứng dụng --- */}
       <RouterProvider router={router} />
       {/* --------------------------------------------------------- */}
+      
+      {/* BỔ SUNG DEVTOOLS ĐỂ CHỤP ẢNH MINH CHỨNG VÀO BÁO CÁO */}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

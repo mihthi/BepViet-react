@@ -112,6 +112,5 @@
       "gia": 50000,
       "anh": "https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/2024_2_29_638447855533368961_nuoc-mat.jpg?auto=format&fit=crop&w=800&q=80"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }
