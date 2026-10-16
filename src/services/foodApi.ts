@@ -1,81 +1,50 @@
 import { MonAn } from '../types/food';
-import duLieuGocTuJson from '../data/foods.json';
 
-const KHOA_LUU_TRU = 'bep_viet_du_lieu_mon_an_v3';
+const API_URL = 'http://localhost:3001/foods';
 
-// Đọc danh sách món ăn từ LocalStorage (nếu chưa có thì lấy từ foods.json)
-export const docDuLieuTuBoNho = (): MonAn[] => {
-  try {
-    const chuoiJson = localStorage.getItem(KHOA_LUU_TRU);
-    if (chuoiJson) {
-      const danhSach = JSON.parse(chuoiJson);
-      if (Array.isArray(danhSach) && danhSach.length > 0) {
-        return danhSach;
-      }
-    }
-  } catch (loi) {
-    console.error('Lỗi khi đọc dữ liệu từ LocalStorage:', loi);
+async function xuLyPhanHoi<T>(response: Response): Promise<T> {
+  if (!response.ok) {
+    throw new Error(`API món ăn trả về lỗi ${response.status}`);
   }
-  return duLieuGocTuJson as MonAn[];
-};
 
-// Lưu danh sách món ăn vào LocalStorage
-export const luuDuLieuVaoBoNho = (danhSachMon: MonAn[]): void => {
-  try {
-    localStorage.setItem(KHOA_LUU_TRU, JSON.stringify(danhSachMon));
-  } catch (loi) {
-    console.error('Lỗi khi lưu dữ liệu vào LocalStorage:', loi);
-  }
-};
+  return response.json() as Promise<T>;
+}
 
-// Dịch vụ API giả lập bất đồng bộ để kết nối với TanStack Query
+// API món ăn kết nối tới json-server.
 export const foodApi = {
-  // Lấy toàn bộ danh sách món ăn
   layDanhSachMonAn: async (): Promise<MonAn[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 50));
-    return docDuLieuTuBoNho();
+    const response = await fetch(API_URL);
+    return xuLyPhanHoi<MonAn[]>(response);
   },
 
-  // Thêm một món ăn mới vào đầu danh sách
   themMonAnMoi: async (monMoi: Omit<MonAn, 'id'>): Promise<MonAn> => {
-    await new Promise((resolve) => setTimeout(resolve, 50));
-    const danhSachHienTai = docDuLieuTuBoNho();
-    const monAnMoiTao: MonAn = {
-      ...monMoi,
-      id: `mon-${Date.now()}`,
-    };
-    const danhSachMoi = [monAnMoiTao, ...danhSachHienTai];
-    luuDuLieuVaoBoNho(danhSachMoi);
-    return monAnMoiTao;
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(monMoi),
+    });
+    return xuLyPhanHoi<MonAn>(response);
   },
 
-  // Chỉnh sửa thông tin món ăn
   capNhatMonAn: async (monCapNhat: MonAn): Promise<MonAn> => {
-    await new Promise((resolve) => setTimeout(resolve, 50));
-    const danhSachHienTai = docDuLieuTuBoNho();
-    const danhSachMoi = danhSachHienTai.map((mon) =>
-      mon.id === monCapNhat.id ? monCapNhat : mon
-    );
-    luuDuLieuVaoBoNho(danhSachMoi);
-    return monCapNhat;
+    const response = await fetch(`${API_URL}/${monCapNhat.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(monCapNhat),
+    });
+    return xuLyPhanHoi<MonAn>(response);
   },
 
-  // Xóa một món ăn theo ID
   xoaMotMonAn: async (idMonAn: string): Promise<string> => {
-    await new Promise((resolve) => setTimeout(resolve, 50));
-    const danhSachHienTai = docDuLieuTuBoNho();
-    const danhSachMoi = danhSachHienTai.filter((mon) => mon.id !== idMonAn);
-    luuDuLieuVaoBoNho(danhSachMoi);
+    const response = await fetch(`${API_URL}/${idMonAn}`, {
+      method: 'DELETE',
+    });
+    await xuLyPhanHoi<MonAn>(response);
     return idMonAn;
   },
 
-  // Xóa nhiều món ăn được chọn (Xóa hàng loạt)
   xoaNhieuMonAn: async (danhSachId: string[]): Promise<string[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 50));
-    const danhSachHienTai = docDuLieuTuBoNho();
-    const danhSachMoi = danhSachHienTai.filter((mon) => !danhSachId.includes(mon.id));
-    luuDuLieuVaoBoNho(danhSachMoi);
+    await Promise.all(danhSachId.map((id) => foodApi.xoaMotMonAn(id)));
     return danhSachId;
   },
-
 };

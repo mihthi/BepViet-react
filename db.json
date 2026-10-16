@@ -1,0 +1,117 @@
+{
+  "foods": [
+    {
+      "id": "1",
+      "ten": "Phở Bò",
+      "phanLoai": "Món nước",
+      "moTa": "Bánh phở mềm dai dùng cùng thịt bò thái mỏng, nước dùng hầm từ xương trong nhiều giờ, thêm hành lá, rau thơm và chanh ớt.",
+      "gia": 60000,
+      "anh": "https://media-cdn-v2.laodong.vn/storage/newsportal/2024/9/27/1400438/Pho-4.jpg?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "2",
+      "ten": "Bún Riêu",
+      "phanLoai": "Món chính",
+      "moTa": "Bún riêu cua với nước dùng chua thanh từ cà chua và giấm bỗng, kết hợp riêu cua, đậu hũ chiên, huyết và rau sống.",
+      "gia": 35000,
+      "anh": "https://storage.googleapis.com/onelife-public/blog.onelife.vn/2023/09/4504b36a-1.png?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "3",
+      "ten": "Cơm Tấm",
+      "phanLoai": "Món chính",
+      "moTa": "Cơm tấm thơm dẻo ăn cùng sườn nướng đậm đà, bì sợi, chả trứng, mỡ hành và nước mắm chua ngọt đặc trưng Sài Gòn.",
+      "gia": 40000,
+      "anh": "https://upload.wikimedia.org/wikipedia/commons/b/b0/C%C6%A1m_T%E1%BA%A5m%2C_Da_Nang%2C_Vietnam.jpg?utm_source=vi.wikipedia.org&utm_campaign=index&utm_content=original?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "4",
+      "ten": "Gỏi Cuốn",
+      "phanLoai": "Khai vị",
+      "moTa": "Bánh tráng cuộn tôm, thịt luộc, bún tươi và rau thơm, dùng kèm nước chấm đậu phộng béo bùi và đậm đà.",
+      "gia": 45000,
+      "anh": "https://cooponline.vn/tin-tuc/wp-content/uploads/2025/10/goi-cuon-tom-thit-chuan-vi-nuoc-cham-dau-phong-1.png?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "5",
+      "ten": "Bánh Mì",
+      "phanLoai": "Khai vị",
+      "moTa": "Bánh mì vỏ giòn ruột mềm, kẹp pate, thịt nguội, chả lụa, dưa leo, đồ chua và rau thơm.",
+      "gia": 35000,
+      "anh": "https://cdn2.tuoitre.vn/tcdulichtphcm/media/upload/1-2025/images/2025-03-25/1742898108-481231772_122140861622606002_6478007692031959728_n.jpg?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "6",
+      "ten": "Bún Bò Huế",
+      "phanLoai": "Món nước",
+      "moTa": "Bún bò Huế với nước dùng thơm mùi sả và mắm ruốc, kết hợp bắp bò, giò heo, chả cua, rau sống và sa tế cay nồng.",
+      "gia": 55000,
+      "anh": "https://lalago.vn/wp-content/uploads/2026/01/bun-bo-hue-da-nang.jpg?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "7",
+      "ten": "Bánh Xèo",
+      "phanLoai": "Món chính",
+      "moTa": "Bánh xèo vàng giòn với nhân tôm, thịt ba chỉ và giá đỗ, cuốn cùng rau sống rồi chấm nước mắm chua ngọt.",
+      "gia": 65000,
+      "anh": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgcUhjccYGruOGqdeGgKszSCEfarj7lo-xCTt61aKH99V3EicbrWppXqQ&s=10?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "8",
+      "ten": "Chả Giò",
+      "phanLoai": "Khai vị",
+      "moTa": "Chả giò chiên vàng giòn với nhân thịt, tôm, miến và rau củ, dùng kèm rau sống, bún tươi và nước chấm chua ngọt.",
+      "gia": 55000,
+      "anh": "https://cdn.tgdd.vn/2020/07/CookRecipe/Avatar/cha-gio-hai-san-xot-mayonnaise-thumbnail.jpg?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "9",
+      "ten": "Bánh Canh",
+      "phanLoai": "Món nước",
+      "moTa": "Bánh canh với sợi bột gạo mềm dai, nước dùng đậm đà, kết hợp thịt heo, tôm, cua hoặc chả cá tùy khẩu vị.",
+      "gia": 50000,
+      "anh": "https://bepmina.vn/wp-content/uploads/2021/05/cach-nau-banh-canh-thit-heo-scaled.jpg?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "10",
+      "ten": "Chè Bưởi",
+      "phanLoai": "Tráng miệng",
+      "moTa": "Chè bưởi gồm cùi bưởi giòn dẻo nấu cùng đậu xanh, nước cốt dừa béo thơm và phần nước chè ngọt thanh.",
+      "gia": 40000,
+      "anh": "https://www.huongnghiepaau.com/wp-content/uploads/2019/01/che-buoi-an-giang.jpg?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "11",
+      "ten": "Chè Đậu Đỏ",
+      "phanLoai": "Tráng miệng",
+      "moTa": "Chè đậu đỏ nấu mềm bùi với nước đường ngọt thanh, dùng cùng nước cốt dừa béo thơm và đá mát lạnh.",
+      "gia": 40000,
+      "anh": "https://cdn.tgdd.vn/Files/2017/09/11/1020790/cach-nau-che-dau-do-nhanh-mem-don-gian-cho-ngay-ban-ron-202205241021480439.jpg?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "12",
+      "ten": "Chè Thập Cẩm",
+      "phanLoai": "Tráng miệng",
+      "moTa": "Chè thập cẩm kết hợp nhiều loại đậu, thạch, hạt sen, trái cây và nước cốt dừa, tạo nên vị ngọt mát và nhiều tầng kết cấu.",
+      "gia": 35000,
+      "anh": "https://bibomart.com.vn/camnang//wp-content/media/2025/03/image8-17.jpg?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "13",
+      "ten": "Cà Phê",
+      "phanLoai": "Đồ uống",
+      "moTa": "Cà phê rang xay pha phin đậm đà, có thể dùng nóng hoặc thêm sữa đặc để tạo vị ngọt béo hài hòa.",
+      "gia": 40000,
+      "anh": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "14",
+      "ten": "Nước mát",
+      "phanLoai": "Đồ uống",
+      "moTa": "Nước mát thanh nhẹ nấu từ các loại thảo mộc và nguyên liệu tự nhiên, có vị ngọt dịu và giúp giải khát trong ngày nóng.",
+      "gia": 50000,
+      "anh": "https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/2024_2_29_638447855533368961_nuoc-mat.jpg?auto=format&fit=crop&w=800&q=80"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
