@@ -50,7 +50,7 @@ export const SuccessPopupModal: React.FC<ThuocTinhPopupThanhCong> = ({
             onClick={dongPopup}
             className="w-full py-2.5 px-4 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 rounded-xl transition-all shadow-sm shadow-emerald-600/20 cursor-pointer"
           >
-            Đồng ý / Hoàn tất
+           Hoàn tất
           </button>
         </div>
       </div>

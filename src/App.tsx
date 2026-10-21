@@ -2,7 +2,7 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
-
+import { keepPreviousData } from '@tanstack/react-query';
 import { useState } from 'react';
 import {
   QueryClient,
@@ -102,6 +102,7 @@ function AppContent() {
     tieuDe: '',
     noiDung: '',
   });
+  const [loiThaoTac, setLoiThaoTac] = useState<string | null>(null);
 
   // Query: Lấy danh sách món ăn từ Server State (mock API)
   const {
@@ -113,13 +114,18 @@ function AppContent() {
   } = useQuery({
     queryKey: ['danh-sach-mon-an'],
     queryFn: foodApi.layDanhSachMonAn,
+    placeholderData: keepPreviousData,
   });
 
   // Mutation: Thêm món ăn mới
   const mutationThemMon = useMutation({
     mutationFn: (monMoi: Omit<MonAn, 'id'>) => foodApi.themMonAnMoi(monMoi),
+    onError: (loi) => {
+      setLoiThaoTac(loi instanceof Error ? loi.message : 'Không thể thêm món ăn.');
+    },
     onSuccess: (monVuaThem) => {
       queryClient.invalidateQueries({ queryKey: ['danh-sach-mon-an'] });
+      setLoiThaoTac(null);
       setDangMoModalBieuMau(false);
       setMonAnCanChinhSua(null);
       setThongBaoThanhCong({
@@ -134,8 +140,12 @@ function AppContent() {
   // Mutation: Cập nhật chỉnh sửa món ăn
   const mutationCapNhatMon = useMutation({
     mutationFn: (monCapNhat: MonAn) => foodApi.capNhatMonAn(monCapNhat),
+    onError: (loi) => {
+      setLoiThaoTac(loi instanceof Error ? loi.message : 'Không thể cập nhật món ăn.');
+    },
     onSuccess: (monVuaSua) => {
       queryClient.invalidateQueries({ queryKey: ['danh-sach-mon-an'] });
+      setLoiThaoTac(null);
       setDangMoModalBieuMau(false);
       setMonAnCanChinhSua(null);
       setThongBaoThanhCong({
@@ -151,6 +161,7 @@ function AppContent() {
   const mutationXoaMotMon = useMutation({
     mutationFn: (idMon: string) => foodApi.xoaMotMonAn(idMon),
     onMutate: async (idMon: string) => {
+      setLoiThaoTac(null);
       await queryClient.cancelQueries({ queryKey: ['danh-sach-mon-an'] });
       const duLieuTruocKhiXoa = queryClient.getQueryData<MonAn[]>(['danh-sach-mon-an']);
       if (duLieuTruocKhiXoa) {
@@ -161,17 +172,21 @@ function AppContent() {
       }
       return { duLieuTruocKhiXoa };
     },
-    onError: (_loi, _id, nguCanh) => {
+    onError: (loi, _id, nguCanh) => {
       if (nguCanh?.duLieuTruocKhiXoa) {
         queryClient.setQueryData(['danh-sach-mon-an'], nguCanh.duLieuTruocKhiXoa);
       }
+      setLoiThaoTac(loi instanceof Error ? loi.message : 'Không thể xóa món ăn.');
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['danh-sach-mon-an'] });
     },
-    onSuccess: () => {
-      const tenMonBiXoa = monAnCanXoa?.ten || 'Món ăn';
+    onSuccess: (_idDaXoa, idMon, nguCanh) => {
+      const tenMonBiXoa =
+        nguCanh?.duLieuTruocKhiXoa?.find((mon) => mon.id === idMon)?.ten ||
+        (monAnCanXoa?.id === idMon ? monAnCanXoa.ten : 'Món ăn');
       setMonAnCanXoa(null);
+      setLoiThaoTac(null);
       setThongBaoThanhCong({
         dangMo: true,
         loaiThaoTac: 'xoa',
@@ -185,6 +200,7 @@ function AppContent() {
   const mutationXoaNhieuMon = useMutation({
     mutationFn: (danhSachId: string[]) => foodApi.xoaNhieuMonAn(danhSachId),
     onMutate: async (danhSachId: string[]) => {
+      setLoiThaoTac(null);
       await queryClient.cancelQueries({ queryKey: ['danh-sach-mon-an'] });
       const duLieuTruocKhiXoa = queryClient.getQueryData<MonAn[]>(['danh-sach-mon-an']);
       if (duLieuTruocKhiXoa) {
@@ -195,17 +211,20 @@ function AppContent() {
       }
       return { duLieuTruocKhiXoa };
     },
-    onError: (_loi, _ids, nguCanh) => {
+    onError: (loi, _ids, nguCanh) => {
       if (nguCanh?.duLieuTruocKhiXoa) {
         queryClient.setQueryData(['danh-sach-mon-an'], nguCanh.duLieuTruocKhiXoa);
       }
+      setLoiThaoTac(loi instanceof Error ? loi.message : 'Không thể xóa các món đã chọn.');
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['danh-sach-mon-an'] });
     },
     onSuccess: (cacIdDaXoa) => {
-      const soLuongXoa = cacIdDaXoa.length;
+      const soLuongXoa = cacIdDaXoa?.length || 0; 
+
       setDanhSachIdCanXoaHangLoat(null);
+      setLoiThaoTac(null);
       setThongBaoThanhCong({
         dangMo: true,
         loaiThaoTac: 'xoa-hang-loat',
@@ -217,6 +236,7 @@ function AppContent() {
 
   // Xử lý lưu món ăn (Thêm mới hoặc Cập nhật)
   const xuLyLuuMonAn = (duLieuMon: Omit<MonAn, 'id'> & { id?: string }) => {
+    setLoiThaoTac(null);
     if (duLieuMon.id) {
       mutationCapNhatMon.mutate(duLieuMon as MonAn);
     } else {
@@ -231,11 +251,13 @@ function AppContent() {
   };
 
   const moModalThemMon = () => {
+    setLoiThaoTac(null);
     setMonAnCanChinhSua(null);
     setDangMoModalBieuMau(true);
   };
 
   const moModalChinhSuaMon = (monAn: MonAn) => {
+    setLoiThaoTac(null);
     setMonAnCanChinhSua(monAn);
     setDangMoModalBieuMau(true);
   };
@@ -253,6 +275,22 @@ function AppContent() {
         // -------------------------------------------------------------------
         tongSoMon={danhSachMonAn.length}
       />
+
+      {loiThaoTac && !dangMoModalBieuMau && (
+        <div
+          role="alert"
+          className="mx-auto mt-4 flex w-full max-w-7xl items-center justify-between gap-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+        >
+          <span>{loiThaoTac}</span>
+          <button
+            type="button"
+            onClick={() => setLoiThaoTac(null)}
+            className="font-medium hover:text-rose-900"
+          >
+            Đóng
+          </button>
+        </div>
+      )}
 
       {/* Vùng nội dung chính */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
@@ -308,9 +346,12 @@ function AppContent() {
         dongModal={() => {
           setDangMoModalBieuMau(false);
           setMonAnCanChinhSua(null);
+          setLoiThaoTac(null);
         }}
         xuLyLuuMonAn={xuLyLuuMonAn}
         monAnCanSua={monAnCanChinhSua}
+        loiLuuMon={loiThaoTac}
+        dangLuu={mutationThemMon.isPending || mutationCapNhatMon.isPending}
       />
 
       {/* 3. Modal xác nhận xóa 1 món */}

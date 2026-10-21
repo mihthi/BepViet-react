@@ -43,11 +43,15 @@ export const foodApi = {
   },
 
   xoaNhieuMonAn: async (danhSachId: string[]): Promise<string[]> => {
-    await Promise.all(
+    const responses = await Promise.all(
       danhSachId.map((id) =>
         fetch(`${API_URL}/${id}`, { method: 'DELETE' })
       )
     );
+    const phanHoiBiLoi = responses.find((response) => !response.ok);
+    if (phanHoiBiLoi) {
+      throw new Error(`API xóa món ăn trả về lỗi ${phanHoiBiLoi.status}`);
+    }
     return danhSachId;
   },
 };
