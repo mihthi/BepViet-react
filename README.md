@@ -5,17 +5,11 @@
 ---
 
 ## Mục Lục
-1. [Giới Thiệu Đồ Án](#-giới-thiệu-đồ-án)
-2. [Mục Tiêu Hệ Thống](#-mục-tiêu-hệ-thống)
-3. [Công Nghệ Sử Dụng](#-công-nghệ-sử-dụng)
-4. [Cấu Trúc Thư Mục Dự Án](#-cấu-trúc-thư-mục-dự-án)
-5. [Hướng Dẫn Cài Đặt và Chạy Dự Án (Local)](#-hướng-dẫn-cài-đặt-và-chạy-dự-án-local)
-6. [Tài Liệu & Minh Chứng](#-tài-liệu--minh-chứng)
-
----
-
-## Giới Thiệu Đồ Án
-Ứng dụng **Bếp Việt** là một Single Page Application (SPA) được phát triển nhằm mô phỏng hệ thống quản lý thực đơn và quán ăn hiện đại. Ứng dụng cung cấp các tính năng toàn diện cho phép người quản lý xem danh sách món ăn dưới dạng lưới thẻ hoặc bảng quản lý, thực hiện tìm kiếm, lọc theo danh mục, sắp xếp, phân trang, xem chi tiết và thực hiện các thao tác thay đổi dữ liệu (Thêm, Sửa, Xóa) với độ phản hồi nhanh nhờ cơ chế cập nhật lạc quan (Optimistic Update).
+1. [Mục Tiêu Hệ Thống](#-mục-tiêu-hệ-thống)
+2. [Công Nghệ Sử Dụng](#-công-nghệ-sử-dụng)
+3. [Cấu Trúc Thư Mục Dự Án](#-cấu-trúc-thư-mục-dự-án)
+4. [Hướng Dẫn Cài Đặt và Chạy Dự Án (Local)](#-hướng-dẫn-cài-đặt-và-chạy-dự-án-local)
+5. [Tài Liệu & Minh Chứng](#-tài-liệu--minh-chứng)
 
 ---
 
