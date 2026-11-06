@@ -1,7 +1,6 @@
-# Hệ Thống Quản Lý Quán Ăn - Bếp Việt
+# Đề tài: **Tìm hiểu React 19 + Vite + TanStack và ứng dụng quản lý thực đơn Bếp Việt**
 
-Đồ án môn học: **Các Công Nghệ Lập Trình Hiện Đại**  
-Đề tài: **Tìm hiểu React 19 + Vite + TanStack và ứng dụng quản lý thực đơn Bếp Việt**
+Đồ án môn học: **Các Công Nghệ Lập Trình Hiện Đại**
 
 ---
 
