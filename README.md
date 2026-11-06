@@ -1,5 +1,3 @@
-Dưới đây là toàn bộ tệp **`README.md`** hoàn chỉnh, chuẩn mực và đã định dạng sẵn trong khung code. Bạn chỉ cần bấm nút **Copy** (hoặc chép nguyên văn) để dán trực tiếp vào file trên GitHub:
-
 ```markdown
 # Hệ Thống Quản Lý Quán Ăn - Bếp Việt
 
