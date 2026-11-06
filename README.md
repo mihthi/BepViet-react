@@ -1,4 +1,3 @@
-```markdown
 # Hệ Thống Quản Lý Quán Ăn - Bếp Việt
 
 Đồ án môn học: **Các Công Nghệ Lập Trình Hiện Đại**  
@@ -132,7 +131,7 @@ Truy cập ứng dụng trên trình duyệt tại địa chỉ: `http://localho
 
 ## Tài Liệu & Minh Chứng
 
-* **Báo cáo đồ án chi tiết (Google Docs):** (https://docs.google.com/document/d/1WBkGFZ5ebZ3RjnOcKgTK-m50h9FT8h67/edit)](https://docs.google.com/document/d/1WBkGFZ5ebZ3RjnOcKgTK-m50h9FT8h67/edit)
+* **Báo cáo đồ án chi tiết (Google Docs):** (https://docs.google.com/document/d/1WBkGFZ5ebZ3RjnOcKgTK-m50h9FT8h67/edit)]
 * **Repository GitHub:** [mihthi/BepViet-react](https://github.com/mihthi/BepViet-react)
 
 ```
